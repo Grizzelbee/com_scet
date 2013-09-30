@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<extension type="component" version="1.7.0" client = "site" method="upgrade">
+
+    <name>SCET</name> 
+    <version>2.5.19</version>
+    <creationDate>2013-08-26</creationDate>
+    <author>Hanjo Hingsen</author>
+	<authorEmail>webmaster@treu-zu-kaarst.de</authorEmail>
+	<authorUrl>http://www.treu-zu-kaarst.de</authorUrl>
+	<copyright>All rights reserved</copyright>
+	<license>GNU/GPL</license>
+    <description>COM_SCET_XML_DESCRIPTION</description>
+    <group>content</group>
+    
+    <files folder="site"> 
+        <filename>scet.php</filename> 
+        <filename>controller.php</filename> 
+        <filename>index.html</filename> 
+        <filename>views/scet/view.html.php</filename> 
+        <filename>views/scet/index.html</filename> 
+        <filename>views/scet/tmpl/default.php</filename> 
+        <filename>views/scet/tmpl/index.html</filename> 
+        <filename>views/scet/tmpl/default.xml</filename> 
+        <filename>assets/css/scet.css</filename> 
+        <filename>assets/images/de-DE/new.png</filename> 
+        <filename>assets/images/de-DE/update.png</filename> 
+        <filename>assets/images/de-DE/today.png</filename> 
+        <filename>assets/images/en-GB/update.png</filename> 
+        <filename>assets/images/en-GB/new.png</filename> 
+        <filename>assets/images/en-GB/update.png</filename> 
+        <filename>models/scet.php</filename> 
+        <filename>models/index.html</filename> 
+    </files> 
+    
+   	<languages folder='site/language'>
+		<language tag="de-DE">de-DE/de-DE.com_scet.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_scet.ini</language>
+	</languages>
+
+    <install> 
+        <sql> 
+            <file charset="utf8" driver="mysql">sql/install/install.scet.sql</file> 
+        </sql> 
+    </install> 
+    
+  	<!-- SQL files to run on update -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath>
+			<schemapath type="mysqli">sql/updates</schemapath>
+		</schemas>
+	</update> 
+
+    <uninstall> 
+        <sql> 
+            <file charset="utf8" driver="mysql">sql/uninstall/uninstall.scet.sql</file> 
+        </sql> 
+    </uninstall> 
+    
+   	<!-- Media files -->
+	<media destination="com_scet" folder="media">
+		<folder>images</folder>
+		<folder>css</folder>
+	</media>
+    
+    <administration> 
+        <menu link="option=com_scet&amp;view=scet" img="components/com_scet/assets/images/kalender_16x16.png">COM_SCET</menu> 
+        <submenu> 
+			<menu link="option=com_scet&amp;controller=category&amp;view=categories" img="../media/media/images/folder_sm.png">COM_SCET_MANAGE_CATEGORIES</menu>
+			<menu link="option=com_scet&amp;controller=event&amp;view=events" img="components/com_scet/assets/images/kalender_16x16.png">COM_SCET_MANAGE_EVENTS</menu>
+        </submenu> 
+        
+        <files folder="admin"> 
+            <filename>index.html</filename> 
+            <filename>scet.php</filename> 
+            <filename>controller.php</filename> 
+            <filename>config.xml</filename> 
+            <folder>sql</folder>
+            <folder>assets</folder>
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files> 
+        
+        <languages folder="admin/language">
+            <language tag="de-DE">de-DE/de-DE.com_scet.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_scet.sys.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_scet.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_scet.sys.ini</language>
+        </languages>
+        
+    </administration> 
+
+    <updateservers>
+        <server type="extension" priority="1" name="SCET Update Site">http://www.treu-zu-kaarst.de/scet_update/com_scet_update.xml</server>
+    </updateservers>
+    
+</extension>

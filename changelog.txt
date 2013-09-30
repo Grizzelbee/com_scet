@@ -1,0 +1,174 @@
+ToDo:
+-----
+FrontEnd:
+---------
+[] => Prüfen, ob com_Schuetzenzug installiert ist und ggf, die Geburtstage der Mitglieder mit einlesen und ausgeben.
+[] Frontend: Oben werden jetzt Links zu den einzelnen kategorien angezeigt
+        
+    
+Versionshistorie:
+-----------------
+Version 2.5.19
+    [~] weitreichende Codepflege
+    [+] In den Admin-Listenansichten lassen sich jetzt alle Ja/Nein-Felder durch direkten Klick umschalten
+    [+] volle Joomla 3 Kompatibilität hergestellt
+    [!] Anzahl der Mailbenachrichtungen wird nur noch einmal ausgegeben und nicht mehr pro Empfänger ein mal.
+2013.08.26
+
+Version 2.5.18
+    [+] kann jetzt in Zusammenarbeit mit com_jSchuetze Mails bei Terminänderungen verschicken
+        diese Funktion benötigt com_jSchuetze V1.1.1, da erst dort die notwendige Option gesetzt werden kann
+2013.07.10
+
+Version 2.5.17
+    [+] Layout leicht geändert
+    [+] Layout funktioniert jetzt auf verschiedenen Templates gleich
+    [!] Komponentenheader funktioniert jetzt auch auf verschiedenen Templates richtig.
+    [!] Bei der Installation wurde eine Tabellenspalte nicht angelegt, was zu einer leeren Ausgabe führte
+2013.05.15
+
+Version 2.5.16
+    [+] Im FrontEnd wir jetzt ein Joomla konformer Komponentenheader ausgegeben
+    [+] Neue Option eingebaut um eine Grafik rechts unter dem Header anzuzeigen.
+    [+] Wenn eine Seitenüberschrift in den Seitenoptionen eingestellt wird, wir diese auch (links neben dem Logo) ausgegeben
+2013.04.15
+
+Version 2.5.15
+    [!] Fehler beim Update der Kompo beseitigt
+    [!] Im Formular für die Kategorien einen <br /> eingefügt. Weil der IE den da braucht um das Formular richtig anzuzeigen.
+2013.03.05
+
+Version 2.5.14
+    [!] Fehler bei der Installation der Termine Tabelle beseitigt
+2013.02.24
+
+Version 2.5.13
+    [!] Kategorienverwaltung im Backend komplett überarbeitet, die funktionierte gar nicht mehr
+2013.02.23
+
+Version 2.5.12
+    [!] Bugfixes
+2013.02.06
+
+Version 2.5.11
+    [!] Das Feld für die Regel war aus dem Event-Editor verschwunden. Ist jetzt wieder da.
+2013.02.01
+
+Version 2.5.10
+    [+] Die Menüpunkte haben jetzt Icons 
+    [~] Einige noch hart codierte Menüpunkt-Tooltipps in die Sprachdateien ausgelagert.
+    [~] DB-Feld DUTY in MANDATORY umbenannt; dadurch mussten alle Dateien, die auf das Feld zugriffen
+        angepasst werden.
+    [+] Bei der Eingabe eines neuen Termins: Ein "Speichern + Neu" Button eingebaut
+    [+] Option "Jahrestag" eingebaut. Dann können Jahrestage, wie z.B. Geburtstage 
+        mit dem Original-Datum eingegeben und jährlich wieder angezeigt werden. 
+        In dem Fall einen Integer-Format-String mit einbauen, damit in die Iteration 
+        (Hanjos %d. Geburtstag --> Hanjos 40. Geburtstag) mit ausgegeben werden kann. 
+        Bei Jahrestagen, wird die korrekte Differenz automatisch berechnet. Bei allen anderen
+        Terminen steht da 0 (Null).
+    [+] Im Frontend werden Jahrestage immer bis zum 31.12. eines Jahres (als abgelaufen) angezeigt. 
+        Die neue Runde beginnt immer am 01.01. eines neuen Jahres. 
+    [+] SCET-Notifier hat auch gelernt mit den Jahrestagen umzugehen (Version 2.5.6)
+    [!] Der Delete-Button und die Veröffentlichen/Sperren-Buttons funktionieren wieder; 
+        durch das ReWrite hatten die ihre Funktion verloren.
+    [+] Die beiden Event-Views haben jetzt einen Kalender als Icon
+2012-10-08
+
+Version 2.5.9 
+    Backend:
+    [!] Der Menüpunkt "Termine verwalten" zeigte noch auf den alten View und führte somit zu einem Fehler
+    [!] Das Freigeben/Veröffentlichen/Verpflichten funktionierte in der Listenansicht der Termine nicht und
+        führte zu einem Fehler.
+    [!] Das Feld "Ort" im neuen Termine-Bearbeitungsforular vergessen. Ist jetzt wieder vorhanden.
+    [!] Schreibfehler in der deutschen Sprachdatei korrigiert
+    [~] Englische Sprachdateien komplett neu erstellt
+2012-09-07    
+    
+    Version 2.5.8 
+    Backend:
+    [~] Den Event-Manager-Teil des Backends komplett von Grund auf neu geschrieben
+    [+] Im Backend SuchFilter eingebaut
+    [+] Im Backend Filter für den Freigegeben-Status eingebaut
+    [+] Im Backend Filter für die Kategorien eingebaut
+    [+] Im Backend Filter für die Öffentlichkeit eingebaut
+    [+] Im Backend Filter für die Verpflichtung eingebaut
+    [+] Im Backend Pagination für die Events eingebaut
+    [+] Im Backend wird jetzt in der Listenansicht der Events auch das Feld PFLICHT angezeigt. 
+    
+    Frontend:
+    [~] Frontend: Legende wird jetzt etwas schöner formatiert
+2012-08-15
+
+Version 2.5.7 
+    [~] Diverse kleinere Änderungen 
+2012-03-18
+
+Version 2.5.6 // erste komplett lauffähige Version für Joomla 2.5
+    [-] Es wird keine Kombiversion für Joomla 1.5 / 2.5 geben. die Unterstütung für Joomla 1.5 endet mit der SCET-Version 0.9.30
+    [X] Auf Joomla 2.5 portiert. Dafür waren diverse Anpassungen notwendig.
+    [X] Hover-Farbe auf ein Pastellgelb angepasst. Das reine Gelb war zu grell.
+    [X] Wenn User beim Seitenaufruf eingeloggt ist, wird dieser letzte Aufruf in der DB protokolliert. 
+        Dadurch kann die Neu/Update Anzeige sich auch auf diesen Timestamp beziehen und damit wesentlich präziser arbeiten.
+    [x] Updateserver hinzugefügt
+2012-02-14
+
+Version 0.9.30
+    [X] => Beim Hovern über die Tabelle soll die aktuelle Zeile hervorgehoben werden.
+2012-01-27
+
+Version 0.9.27
+    [X] aktuelle Jahreszahl in der Copyright Meldung mit ausgeben
+    [-] Den Rahmen um die Legende wieder entfernen; Verworfen. Das sieht nicht aus.
+    [X] 1 nbsp vor die rechten Texte der Legende setzen.
+    [X] Darf bei Update die Datenbank nicht mehr leeren
+    [X] Als Standard in die Ansicht "Events" springen
+    [!] Beim Speichern der Daten wurden das Update-Datum und das Insert-Datum nicht korrekt gesetzt
+2012-01-13    
+
+
+Version 0.9.17
+    [+] Sprachdateien vervollständigt und aktualisiert
+    [+] Diese Datei hier erstellt
+2011-12-08    
+
+Version 0.9.16
+    [+] erste funktionierende Version
+2011-12-07    
+    
+In Verison 0.9.16 erledigt:
+---------------------------
+Front-End-Features:
+-------------------            
+[X] => Die Termine sollen in Tabellen untereinander aufgelistet werden. 
+[X] => Eine Tabelle pro Kategorie. 
+[X] => Die Reihenfolge der Kategorien gibt die Sortorder vor.
+[X] => Innerhalb der Tabellen werden die Termine nach Datum und Uhrzeit sortiert.
+[X] => Neue oder aktualisierte Termine sollen mit einer Grafik "NEU" oder "Update" markiert werden. 
+      ! Alles was sich seit dem letzten Login geändert hat !
+[X] => Events mit einem grünen Pfeil HEUTE markieren !
+[X] => Bei der Anzeige der Termine muss weiterhin der Accesslevel (Öffentlich, registered, ...) berücksichtigt werden. 
+[X] => Nach überschreiten des Termins wird dieser in grauer Schriftfarbe geschrieben
+[X] => Events können als öffentlich / nicht öffentlich deklariert werden
+[X] => Lokalisierung über language.ini Dateien
+[X] => Copyright und Versionsvermerk mit ausgeben
+[-] => Accesslevel für das Recht: BEARBEITEN muss einstellbar sein
+[X] => Legende unter den Terminen machen. -> Alle verwendeten Pfeile und Textfarben kurz erklären.
+
+
+Back-End-Features:
+------------------
+[/] => Kategorie-Manager
+    [X] => Kategorien einfügen
+    [X] => Kategorien bearbeiten
+    [X] => Kategorien löschen
+    [/] => SortOrder anpassen
+    [X] => Public einstellen
+    [X] => Published einstellen
+[/] => Event-Manager
+    [X] => Events einfügen
+    [X] => Events bearbeiten
+    [X] => Events löschen
+    [X] => Public einstellen
+    [X] => Published einstellen
+    [-] => Uhrzeiten vor dem Speichern auf UTC konvertieren // Nicht mehr nötig !
+    [X] => In der Eventliste die Termin veröffentlichen/unveröffentlichen können / Analog zu Publish/unpublish

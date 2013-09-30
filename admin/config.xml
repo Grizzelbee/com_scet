@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset   name        = "component"
+                label       = "COM_SCET_FIELDSET_CONFIG_CLIENT_OPTIONS_LABEL"
+                description = "COM_SCET_FIELDSET_CONFIG_CLIENT_OPTIONS_LABEL_DESC">
+
+        <field  id          = "new_subject"
+                name        = "new_subject"
+                type        = "input"
+                label       = "COM_SCET_FIELD_NEW_SUBJECT_LABEL"
+                description = "COM_SCET_FIELD_NEW_SUBJECT_LABEL_DESC"
+                default     = ""
+                size        = "80">
+        </field>
+
+        <field  id          = "new_mailbody"
+                name        = "new_mailbody"
+                type        = "editor"
+                label       = "COM_SCET_FIELD_NEW_MAILBODY_LABEL"
+                description = "COM_SCET_FIELD_NEW_MAILBODY_LABEL_DESC"
+                default     = ""
+                size        = "1024">
+        </field>
+
+        <field  id          = "changed_subject"
+                name        = "changed_subject"
+                type        = "input"
+                label       = "COM_SCET_FIELD_CHANGED_SUBJECT_LABEL"
+                description = "COM_SCET_FIELD_CHANGED_SUBJECT_LABEL_DESC"
+                default     = ""
+                size        = "80">
+        </field>
+
+        <field  id          = "changed_mailbody"
+                name        = "changed_mailbody"
+                type        = "editor"
+                label       = "COM_SCET_FIELD_CHANGED_MAILBODY_LABEL"
+                description = "COM_SCET_FIELD_CHANGED_MAILBODY_LABEL_DESC"
+                default     = ""
+                size        = "1024">
+        </field>
+    </fieldset>
+</config>

@@ -1,0 +1,58 @@
+<style type="text/css">
+  
+.NoFunction{}
+
+
+.eventtable {
+    width:100%;
+    border-spacing:0px;
+    border:1px solid black; 
+    border-collapse:collapse;
+}
+
+.eventtable th{
+    background-color: grey; 
+    text-align: center;
+    font-weight: bold;
+    color:white;
+    border-collapse:collapse; 
+}
+
+.td_center{
+    text-align:center;
+    height:38px;
+}
+
+.td_left{
+    text-align:left;
+    height:38px;
+}
+
+.HighliteMe_past{
+    color : grey; 
+    font-weight: normal;
+    border:1px solid black; 
+    border-collapse:collapse; 
+}
+  
+.HighliteMe_future{
+    color : black;
+    font-weight: bold;
+    border:1px solid black; 
+    border-collapse:collapse; 
+}
+
+tr.HighliteMe_future:hover {
+    background-color: #FDFAD7;
+}
+  
+tr.HighliteMe_past:hover {
+    background-color: #FDFAD7;
+}
+  
+tr.Highlite_today {
+    font-weight: bold;
+    background-color: lime;
+}
+
+</style>

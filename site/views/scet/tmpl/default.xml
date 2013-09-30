@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SCET_SCET_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_SCET_SCET_VIEW_DEFAULT_TITLE_DESC]]>
+		</message>
+	</layout>
+
+    <fields name="params">
+        <!-- Page-Options. -->
+        <fieldset   name        = "page-options"
+                    label       = "COM_MENUS_PAGE_OPTIONS_LABEL">
+            <field  name        = "show_logo"
+                    type        = "radio"
+                    class       = "btn-group"
+                    default     = "1"
+                    label       = "COM_SCET_FIELD_SHOWLOGO_LABEL"
+                    description = "COM_SCET_FIELD_SHOWLOGO_LABEL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field  name        = "logo_image"
+                    type        = "media"
+                    label       = "COM_SCET_FIELD_LOGOIMAGE_LABEL"
+                    description = "COM_SCET_FIELD_LOGOIMAGE_LABEL_DESC"
+                    default     = "images/stories/clock.jpg">
+            </field>
+        </fieldset>    
+    </fields>
+
+</metadata>
+    
