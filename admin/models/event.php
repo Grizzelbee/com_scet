@@ -118,20 +118,26 @@ class SCETModelEvent extends JModelAdmin
     
     public function getVCalFile($data)
     {
+		$shortHost = JURI::getHost(); 
+		if ( substr($shortHost, 3, 1) == '.') 
+		{
+			$shortHost = substr($shortHost, 4, legth($shortHost)-1)
+		}
+
     	$fileContent  = "BEGIN:VCALENDAR\r\n";
     	$fileContent .= "VERSION:2.0\r\n";
     	$fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
 		$fileContent .= "METHOD:PUBLISH\r\n";
     	$fileContent .= "BEGIN:VEVENT\r\n";
-     	$fileContent .= uniqueid() .'@'. JFactory::GetDomain().   "\r\n";
+     	$fileContent .= 'UID:'.uniqueid() .'@'. $shortHost . "\r\n";
      	// @todo: die Angaben hier müssen noch aus der config geholt werden
-     	$fileContent .= "ORGANIZER;CN=\"Hauptmann, Treu-zu-Kaarst.\":MAILTO:hauptmann@treu-zu-kaarst.de \r\n";
+     	$fileContent .= "ORGANIZER;CN=\"Hauptmann, Treu-zu-Kaarst.\":MAILTO:hauptmann@treu-zu-kaarst.de\r\n";
       	$fileContent .= "LOCATION:".$data['location' ].".\r\n";
       	$fileContent .= "SUMMARY:".$data['location']."\r\n";
       	$fileContent .= "CLASS:PUBLIC\r\n";
-      	$fileContent .= "\r\n";
-      	$fileContent .= "\r\n";
-      	$fileContent .= "\r\n";
+      	$fileContent .= 'DTSTART:' . date('YYYYmmddThhnnss', strtotime($data['uhrzeit']) ) . "\r\n";
+      	$fileContent .= 'DTEND:' . date('YYYYmmddThhnnss', strtotime($data['uhrzeit']) ) . "\r\n";
+      	$fileContent .= 'DTSTAMP:' . date('YYYYmmddThhnnss', time() ) . "\r\n";
       	$fileContent .= "END:VEVENT\r\n";
       	$fileContent .= "END:VCALENDAR\r\n";
       	 
@@ -140,8 +146,12 @@ class SCETModelEvent extends JModelAdmin
     	//DTEND:20131109T235900Z
     	//DTSTAMP:20130930T125900Z
     	
-    	
-    	 
+echo $fileContent;
+die;    	
+
+
+
+    	return $fileContent; 
     }
     
     
@@ -156,6 +166,9 @@ class SCETModelEvent extends JModelAdmin
         $mailer->setSender($sender);
         $textmarken = array("[Termin]", "[Datum]", "[Uhrzeit]", "[Ort]", "[Pflicht]", "%s", "%d.", "%d");
         $daten      = array($data['event'], date('d.m.Y', strtotime($data['datum'])), $data['uhrzeit'], $data['location']==''?JText::_('COM_SCET_NA'):$data['location'], ($data['mandatory']==0?JText::_('JNO'):JText::_('JYES')), "", "", "");
+
+$this->getVCalFile($daten);
+
 
         if ($data['id'] == 0){
             $mailer->setSubject($params->get('new_subject'));
