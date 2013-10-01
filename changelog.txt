@@ -8,6 +8,10 @@ FrontEnd:
     
 Versionshistorie:
 -----------------
+Version 2.5.20
+    [+] Die eMailbenachrichtigung schickt jetzt eine vCal-Datei mit, mit der man den Termin direkt in den Kalender eintragen kann.
+2013.09.30
+
 Version 2.5.19
     [~] weitreichende Codepflege
     [+] In den Admin-Listenansichten lassen sich jetzt alle Ja/Nein-Felder durch direkten Klick umschalten

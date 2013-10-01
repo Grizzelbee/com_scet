@@ -118,38 +118,35 @@ class SCETModelEvent extends JModelAdmin
     
     public function getVCalFile($data)
     {
-		$shortHost = JURI::getHost(); 
+		$shortHost = JURI::getInstance()->getHost(); 
 		if ( substr($shortHost, 3, 1) == '.') 
 		{
-			$shortHost = substr($shortHost, 4, legth($shortHost)-1)
+			$shortHost = substr($shortHost, 5, legth($shortHost)-1);
 		}
-
+		$config      = JFactory::getConfig();
+		
     	$fileContent  = "BEGIN:VCALENDAR\r\n";
     	$fileContent .= "VERSION:2.0\r\n";
     	$fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
 		$fileContent .= "METHOD:PUBLISH\r\n";
     	$fileContent .= "BEGIN:VEVENT\r\n";
-     	$fileContent .= 'UID:'.uniqueid() .'@'. $shortHost . "\r\n";
-     	// @todo: die Angaben hier müssen noch aus der config geholt werden
-     	$fileContent .= "ORGANIZER;CN=\"Hauptmann, Treu-zu-Kaarst.\":MAILTO:hauptmann@treu-zu-kaarst.de\r\n";
-      	$fileContent .= "LOCATION:".$data['location' ].".\r\n";
-      	$fileContent .= "SUMMARY:".$data['location']."\r\n";
+     	$fileContent .= 'UID:'.uniqid() .'@'. $shortHost . "\r\n";
+     	$fileContent .= 'ORGANIZER;CN="'.$config->get( 'mailfrom' ).'":MAILTO:'.$config->get( 'fromname' )."\r\n";
+     	$fileContent .= 'LOCATION:' . $data['location'] . "\r\n";
+      	$fileContent .= 'SUMMARY:' . $data['event'] . "\r\n";
+      	$fileContent .= 'DESCRIPTION:';
+      	if ($data['mandatory'] == '1') 
+      	{ 
+   			$fileContent .= "Pflichttermin\r\n";
+      	} else {
+      		$fileContent .= "kein Pflichttermin\r\n";
+      	}
       	$fileContent .= "CLASS:PUBLIC\r\n";
-      	$fileContent .= 'DTSTART:' . date('YYYYmmddThhnnss', strtotime($data['uhrzeit']) ) . "\r\n";
-      	$fileContent .= 'DTEND:' . date('YYYYmmddThhnnss', strtotime($data['uhrzeit']) ) . "\r\n";
-      	$fileContent .= 'DTSTAMP:' . date('YYYYmmddThhnnss', time() ) . "\r\n";
+      	$fileContent .= 'DTSTART:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
+      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
+      	$fileContent .= 'DTSTAMP:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
       	$fileContent .= "END:VEVENT\r\n";
       	$fileContent .= "END:VCALENDAR\r\n";
-      	 
-    	
-      	//DTSTART:20131109T200000Z
-    	//DTEND:20131109T235900Z
-    	//DTSTAMP:20130930T125900Z
-    	
-echo $fileContent;
-die;    	
-
-
 
     	return $fileContent; 
     }
@@ -166,9 +163,12 @@ die;
         $mailer->setSender($sender);
         $textmarken = array("[Termin]", "[Datum]", "[Uhrzeit]", "[Ort]", "[Pflicht]", "%s", "%d.", "%d");
         $daten      = array($data['event'], date('d.m.Y', strtotime($data['datum'])), $data['uhrzeit'], $data['location']==''?JText::_('COM_SCET_NA'):$data['location'], ($data['mandatory']==0?JText::_('JNO'):JText::_('JYES')), "", "", "");
-
-$this->getVCalFile($daten);
-
+        // temp file für das Attachment anlegen und Daten ins file schreiben
+        $tempfile  = $config->get( 'tmp_path') . '/TzK_Termin.ics';
+        $temp      = fopen($tempfile, 'w');   
+        fwrite($temp, $this->getVCalFile($data) );
+        fclose($temp);
+		$mailer->addAttachment($tempfile);
 
         if ($data['id'] == 0){
             $mailer->setSubject($params->get('new_subject'));
@@ -192,6 +192,9 @@ $this->getVCalFile($daten);
                 $successful++;
             }
         endforeach;
+        // tempfile löschen
+        unlink($tempfile);
+
         if ( $successful == 1 ) {
             JFactory::getApplication()->enqueueMessage( JText::_('COM_SCET_SINGLE_MAIL_SENT') );
         } else {
