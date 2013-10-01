@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 2.5.19                                                 //
+// Version      : 2.5.20                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -115,6 +115,36 @@ class SCETModelEvent extends JModelAdmin
 
         return $db->loadObjectList();
     }
+    
+    public function getVCalFile($data)
+    {
+    	$fileContent  = "BEGIN:VCALENDAR\r\n";
+    	$fileContent .= "VERSION:2.0\r\n";
+    	$fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
+		$fileContent .= "METHOD:PUBLISH\r\n";
+    	$fileContent .= "BEGIN:VEVENT\r\n";
+     	$fileContent .= uniqueid() .'@'. JFactory::GetDomain().   "\r\n";
+     	// @todo: die Angaben hier müssen noch aus der config geholt werden
+     	$fileContent .= "ORGANIZER;CN=\"Hauptmann, Treu-zu-Kaarst.\":MAILTO:hauptmann@treu-zu-kaarst.de \r\n";
+      	$fileContent .= "LOCATION:".$data['location' ].".\r\n";
+      	$fileContent .= "SUMMARY:".$data['location']."\r\n";
+      	$fileContent .= "CLASS:PUBLIC\r\n";
+      	$fileContent .= "\r\n";
+      	$fileContent .= "\r\n";
+      	$fileContent .= "\r\n";
+      	$fileContent .= "END:VEVENT\r\n";
+      	$fileContent .= "END:VCALENDAR\r\n";
+      	 
+    	
+      	//DTSTART:20131109T200000Z
+    	//DTEND:20131109T235900Z
+    	//DTSTAMP:20130930T125900Z
+    	
+    	
+    	 
+    }
+    
+    
     
     public function sendMailNotification($data)
     {
