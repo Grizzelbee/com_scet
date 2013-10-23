@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 2.5.20                                                 //
+// Version      : 2.5.21                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -121,7 +121,7 @@ class SCETModelEvent extends JModelAdmin
 		$shortHost = JURI::getInstance()->getHost(); 
 		if ( substr($shortHost, 3, 1) == '.') 
 		{
-			$shortHost = substr($shortHost, 5, legth($shortHost)-1);
+			$shortHost = substr($shortHost, 5, strlen($shortHost)-1);
 		}
 		$config      = JFactory::getConfig();
 		

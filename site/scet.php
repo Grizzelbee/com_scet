@@ -5,11 +5,11 @@
 // @file        : site/scet.php (Joomla-Entry-File)                     //
 // @implements  :                                                       //
 // @description : Main-Frontend-Entry-File for the SCET-Component       //
-// Version      : 2.5.20                                                //
+// Version      : 2.5.21                                                //
 // *********************************************************************//
 
 defined('_JEXEC') or die('Restricted access'); 
-define('_SCET_VERSION','2.5.20');
+define('_SCET_VERSION','2.5.21');
 
 // import joomla controller library
 jimport('joomla.application.component.controller');

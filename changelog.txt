@@ -8,6 +8,10 @@ FrontEnd:
     
 Versionshistorie:
 -----------------
+Version 2.5.21
+    [!] Fehler bei der Ermittlung der Stringlänge im Hostnamen behoben. Da wurde eine falsche Funktion aufgerufen. 
+2013.10.23
+
 Version 2.5.20
     [+] Die eMailbenachrichtigung schickt jetzt eine vCal-Datei mit, mit der man den Termin direkt in den Kalender eintragen kann.
 2013.09.30

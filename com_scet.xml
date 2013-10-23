@@ -2,8 +2,8 @@
 <extension type="component" version="1.7.0" client = "site" method="upgrade">
 
     <name>SCET</name> 
-    <version>2.5.20</version>
-    <creationDate>2013-09-30</creationDate>
+    <version>2.5.21</version>
+    <creationDate>2013-10-23</creationDate>
     <author>Hanjo Hingsen</author>
 	<authorEmail>webmaster@treu-zu-kaarst.de</authorEmail>
 	<authorUrl>http://www.treu-zu-kaarst.de</authorUrl>
