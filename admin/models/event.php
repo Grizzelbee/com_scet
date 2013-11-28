@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 2.5.21                                                //
+// Version      : 2.5.22                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -143,7 +143,7 @@ class SCETModelEvent extends JModelAdmin
       	}
       	$fileContent .= "CLASS:PUBLIC\r\n";
       	$fileContent .= 'DTSTART:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
-      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
+      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['endezeit']) . "\r\n";
       	$fileContent .= 'DTSTAMP:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
       	$fileContent .= "END:VEVENT\r\n";
       	$fileContent .= "END:VCALENDAR\r\n";
@@ -161,37 +161,46 @@ class SCETModelEvent extends JModelAdmin
         $receipients = $this->getMailReceipients();
         $params      = JComponentHelper::getParams('com_scet');
         $mailer->setSender($sender);
-        $textmarken = array("[Termin]", "[Datum]", "[Uhrzeit]", "[Ort]", "[Pflicht]", "%s", "%d.", "%d");
-        $daten      = array($data['event'], date('d.m.Y', strtotime($data['datum'])), $data['uhrzeit'], $data['location']==''?JText::_('COM_SCET_NA'):$data['location'], ($data['mandatory']==0?JText::_('JNO'):JText::_('JYES')), "", "", "");
+        $textmarken = array("[Termin]", "[Datum]", "[Uhrzeit]", "[Ende]", "[Ort]", "[Pflicht]", "%s", "%d.", "%d");
+        $daten      = array($data['event'], date('d.m.Y', strtotime($data['datum'])), $data['uhrzeit'], $data['endezeit'], $data['location']==''?JText::_('COM_SCET_NA'):$data['location'], ($data['mandatory']==0?JText::_('JNO'):JText::_('JYES')), "", "", "");
         // temp file für das Attachment anlegen und Daten ins file schreiben
-        $tempfile  = $config->get( 'tmp_path') . '/TzK_Termin.ics';
-        $temp      = fopen($tempfile, 'w');   
-        fwrite($temp, $this->getVCalFile($data) );
-        fclose($temp);
-		$mailer->addAttachment($tempfile);
-
-        if ($data['id'] == 0){
-            $mailer->setSubject($params->get('new_subject'));
-            $body = str_replace( $textmarken, $daten, $params->get('new_mailbody') ) ;
-        } else {
-            $mailer->setSubject($params->get('changed_subject'));
-            $body = str_replace( $textmarken, $daten, $params->get('changed_mailbody') ) ;
+        $tempfile  = $config->get( 'tmp_path') .DIRECTORY_SEPARATOR .( ($params->get('ics_filename')=='')?'event.ics':$params->get('ics_filename') );
+                $temp      = fopen($tempfile, 'w');
+        try {
+		        fwrite($temp, $this->getVCalFile($data) );
+		        fclose($temp);
+				$mailer->addAttachment($tempfile);
+		
+		        if ($data['id'] == 0){
+		            $mailer->setSubject($params->get('new_subject'));
+		            $body = str_replace( $textmarken, $daten, $params->get('new_mailbody') ) ;
+		        } else {
+		            $mailer->setSubject($params->get('changed_subject'));
+		            $body = str_replace( $textmarken, $daten, $params->get('changed_mailbody') ) ;
+		        }
+		        
+		        $successful = 0;
+		        foreach($receipients as $receipient):
+		            $mailer->ClearAllRecipients();
+		            $mailer->addRecipient( $receipient->email_priv );
+		
+		            $mailbody = str_replace('[Vorname]', $receipient->vorname, $body);
+		            $mailer->setBody($mailbody);
+		     
+		            $send = $mailer->Send();
+		            if ( $send )
+		            {
+		                $successful++;
+		            }
+		        endforeach;
+        } catch (Exception $e) {
+			// Exception
+        	JFactory::getApplication()->enqueueMessage( $e->getMessage() );
+        	foreach ($messages as $message)
+        	{
+        	    echo $message->MessageText . "\r\n";
+        	};
         }
-        
-        $successful = 0;
-        foreach($receipients as $receipient):
-            $mailer->ClearAllRecipients();
-            $mailer->addRecipient( $receipient->email_priv );
-
-            $mailbody = str_replace('[Vorname]', $receipient->vorname, $body);
-            $mailer->setBody($mailbody);
-     
-            $send = $mailer->Send();
-            if ( $send )
-            {
-                $successful++;
-            }
-        endforeach;
         // tempfile löschen
         unlink($tempfile);
 
@@ -204,13 +213,17 @@ class SCETModelEvent extends JModelAdmin
     }
     
     
-    public function save($array)
+    public function save($data)
     {
-        if ($this->isInstalled('com_jschuetze')) {
-            $this->sendMailNotification($array);
+        if ($this->isInstalled('com_jschuetze') and ($data['published']=='1') ) {
+            $this->sendMailNotification($data);
         }
         
-        return parent::save($array);
+        $data['inserted'] = JFactory::getDate($data['inserted'], 'UTC')->toMySQL();
+        $data['updated']  = JFactory::getDate($data['updated'], 'UTC')->toMySQL();
+        $data['datum']    = JFactory::getDate($data['datum'], 'UTC')->toMySQL();
+        
+        return parent::save($data);
     }
     
     public function setDBField($fieldname, $state, $cids)

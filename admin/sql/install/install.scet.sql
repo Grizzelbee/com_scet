@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `#__scet_events` (
      `rule`            varChar(80) character set utf8 ,
      `datum`           date,
      `uhrzeit`         time,
+     `endezeit`        time,
      `location`        VarChar(80) character set utf8 ,
      `mandatory`       tinyint,
      `anniversary`     tinyint,

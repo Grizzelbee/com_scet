@@ -1,19 +1,20 @@
-ToDo:
------
-FrontEnd:
----------
-[] => Prüfen, ob com_Schuetzenzug installiert ist und ggf, die Geburtstage der Mitglieder mit einlesen und ausgeben.
-[] Frontend: Oben werden jetzt Links zu den einzelnen kategorien angezeigt
-        
-    
 Versionshistorie:
 -----------------
+Version 2.5.22
+    [+] Neues Feld "endezeit" eingeführt.
+    [+] Name der Datei, die bei den Terminbenachrichtigungen mitgesendet wird, kann jetzt konfiguriert werden.
+    [+] Datumsangaben können jetzt überall in deutscher Notation angegeben werden und werden vor dem Speichern in MySQL-Notation konvertiert.
+    [+] Benachrichtigungs-Mail wird nur noch für freigegebene Termine gesendet.
+    [+] Diverse fehlende Feld-Beschreibungen ergänzt
+    [+] Die Termineigabeseite hält jetzt die Session lebendig
+2013-11-28    
+     
 Version 2.5.21
     [!] Fehler bei der Ermittlung der Stringlänge im Hostnamen behoben. Da wurde eine falsche Funktion aufgerufen. 
 2013.10.23
 
 Version 2.5.20
-    [+] Die eMailbenachrichtigung schickt jetzt eine vCal-Datei mit, mit der man den Termin direkt in den Kalender eintragen kann.
+    [+] Die eMailbenachrichtigung schickt jetzt eine vCal-Datei  mit, mit der man den Termin direkt in den Kalender eintragen kann.
 2013.09.30
 
 Version 2.5.19

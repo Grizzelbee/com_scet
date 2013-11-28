@@ -4,6 +4,15 @@
                 label       = "COM_SCET_FIELDSET_CONFIG_CLIENT_OPTIONS_LABEL"
                 description = "COM_SCET_FIELDSET_CONFIG_CLIENT_OPTIONS_LABEL_DESC">
 
+        <field  id          = "ics_filename"
+                name        = "ics_filename"
+                type        = "input"
+                label       = "COM_SCET_FIELD_ICS_FILENAME_LABEL"
+                description = "COM_SCET_FIELD_ICS_FILENAME_LABEL_DESC"
+                default     = "Termin.ics"
+                size        = "80">
+        </field>
+
         <field  id          = "new_subject"
                 name        = "new_subject"
                 type        = "input"
@@ -21,7 +30,7 @@
                 default     = ""
                 size        = "1024">
         </field>
-
+<br />
         <field  id          = "changed_subject"
                 name        = "changed_subject"
                 type        = "input"

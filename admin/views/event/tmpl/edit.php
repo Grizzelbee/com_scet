@@ -5,13 +5,13 @@
 // @file        : admin/views/event/tmpl/edit.php                       //
 // @implements  :                                                       //
 // @description : Template for the single event Edit-View               //
-// Version      : 2.5.19                                                 //
+// Version      : 2.5.22                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access'); 
-
 JHtml::_('behavior.tooltip'); 
+JHtml::_('behavior.keepalive'); 
 $url = 'index.php?option=com_scet&layout=edit&id='; 
 ?> 
 <form action="<?php echo JRoute::_($url.(int) $this->item->id); ?>"method="post" name="adminForm" id="adminForm">      
