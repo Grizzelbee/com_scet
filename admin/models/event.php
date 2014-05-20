@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 2.5.22                                                //
+// Version      : 2.5.23                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -169,7 +169,7 @@ class SCETModelEvent extends JModelAdmin
         try {
 		        fwrite($temp, $this->getVCalFile($data) );
 		        fclose($temp);
-				$mailer->addAttachment($tempfile);
+				$mailer->addAttachment($tempfile, 'event.ics', 'base64', 'text/v-calendar');
 		
 		        if ($data['id'] == 0){
 		            $mailer->setSubject($params->get('new_subject'));

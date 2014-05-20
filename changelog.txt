@@ -1,6 +1,11 @@
 Versionshistorie:
 -----------------
-Version 2.5.22
+Version 2.5.23
+    [!] Termine (die event.ics Datei) werden jetzt auch unter iOS 7.x 
+	    wieder erkannt und können mit einfachem Klick in den Kalender aufgenommen werden.
+2014-04-27    
+
+	Version 2.5.22
     [+] Neues Feld "endezeit" eingeführt.
     [+] Name der Datei, die bei den Terminbenachrichtigungen mitgesendet wird, kann jetzt konfiguriert werden.
     [+] Datumsangaben können jetzt überall in deutscher Notation angegeben werden und werden vor dem Speichern in MySQL-Notation konvertiert.
