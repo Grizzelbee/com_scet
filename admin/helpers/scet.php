@@ -5,7 +5,7 @@
 // @file        : admin/helpers/scet.php (General-Helper-Class)         //
 // @implements  : Class scetHelper                                      //
 // @description : General HelperClass for the scet-Component            //
-// Version      : 2.5.24                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
@@ -34,4 +34,4 @@ class scetHelper extends JHelperContent
 			$vName == 'events'
 		);
 	}
-}    
+}

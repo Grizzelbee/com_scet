@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvents                                 //
 // @description : Model for the DB-Manipulation of the                  //
 //                SCET-Event-List                                       //
-// Version      : 2.5.19                                                 //
+// Version      : 3.0.0                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -25,7 +25,7 @@ class SCETModelEvents extends JModelList
     public function __construct($config = array())
     {
         if (empty($config['filter_fields'])) {
-            $config['filter_fields'] = array('id', 'event', 'category', 'public', 'published', 'mandatory', 'datum', 'uhrzeit' );
+            $config['filter_fields'] = array('id', 'event', 'category', 'public', 'publicity', 'published', 'mandatory', 'datum', 'uhrzeit' );
         }
         parent::__construct($config);
     }

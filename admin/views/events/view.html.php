@@ -5,7 +5,7 @@
 // @file        : admin/views/events/view.html.php                      //
 // @implements  : Class ScetViewEvents                                  //
 // @description : Main-entry for the event-Listview                     //
-// Version      : 2.5.24                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 
 // no direct access to this file
@@ -24,6 +24,7 @@ class SCETViewEvents extends JViewLegacy
         // Get order state
         $this->listOrder = $this->escape($this->state->get( 'list.ordering'  ));
         $this->listDirn  = $this->escape($this->state->get( 'list.direction' ));
+        $this->saveorder = $this->listOrder == 'ordering';
 
         // include custom fields
         require_once JPATH_COMPONENT .'/models/fields/categories.php';
@@ -58,25 +59,25 @@ class SCETViewEvents extends JViewLegacy
         // category
         JHtmlSidebar::addFilter(
         JText::_('COM_SCET_CHOOSE_CATEGORY'),
-        'filter_published',
+        'filter_category',
         JHtml::_('select.options', JFormFieldCategories::getOptions(), 'value', 'text', $this->state->get('filter.category'), true)
         );
         // state
         JHtmlSidebar::addFilter(
         JText::_('JOPTION_SELECT_PUBLISHED'),
-        'filter_published',
-        JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
+        'filter_state',
+        JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.state'), true)
         );
         // publicity
         JHtmlSidebar::addFilter(
         JText::_('COM_SCET_SELECT_PUBLICITY'),
-        'filter_published',
+        'filter_publicity',
         JHtml::_('select.options', JFormFieldPublicity::getOptions(), 'value', 'text', $this->state->get('filter.publicity'), true)
         );
         // mandatority
         JHtmlSidebar::addFilter(
         JText::_('COM_SCET_SELECT_MANDATORITY'),
-        'filter_published',
+        'filter_mandatority',
         JHtml::_('select.options', JFormFieldMandatority::getOptions(), 'value', 'text', $this->state->get('filter.mandatority'), true)
         );
 

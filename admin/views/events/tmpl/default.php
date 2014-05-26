@@ -5,7 +5,7 @@
 // @file        : admin/views/events/tmpl/default.php                   //
 // @implements  :                                                       //
 // @description : Template for the Events-List-View                     //
-// Version      : 2.5.24                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC')or die('Restricted access');
@@ -38,7 +38,15 @@ $sortFields = $this->getSortFields();
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_scet&view=events'); ?>" method="post" name="adminForm" id="adminForm">
-		<div id="filter-bar" class="btn-toolbar">
+	<?php if (!empty( $this->sidebar)) : ?>
+		<div id="j-sidebar-container" class="span2">
+			<?php echo $this->sidebar; ?>
+		</div>
+		<div id="j-main-container" class="span10">
+	<?php else : ?>
+		<div id="j-main-container">
+	<?php endif;?>
+	<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_JTODO_ITEMS_SEARCH_FILTER_DESC');?></label>
 				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_SCET_ITEMS_SEARCH_FILTER'); ?>" />
@@ -94,12 +102,12 @@ $sortFields = $this->getSortFields();
                         <td><?php echo sprintf('%02d', $this->pagination->limitstart+$i+1); ?></td>
                         <td><?php echo JHTML::_('grid.id', $i, $item->id); ?></td>
                         <td><a href="<?php echo $link; ?>"><?php echo $item->event; ?></a></td>
-                        <td align="center"><?php echo $item->category;?></td>
-                        <td align="center"><?php echo JHTML::_('jgrid.published', $item->publicevent, $i, 'events.setPublicity_'); ?></td>
-                        <td align="center"><?php echo JHTML::_('jgrid.published', $item->published, $i, 'events.' ); ?></td>
-                        <td align="center"><?php echo JHTML::_('jgrid.published', $item->mandatory, $i, 'events.setMandatority_'); ?></td>
-                        <td align="center"><?php echo JHTML::_('date', $item->datum,   JText::_('DATE_FORMAT_SCET1'), 'UTC');?></td>
-                        <td align="center"><?php echo JHTML::_('date', $item->uhrzeit, JText::_('TIME_FORMAT_SCET1'), 'UTC');?></td>
+                        <td class=" center"><?php echo $item->category;?></td>
+                        <td class=" center"><?php echo JHTML::_('jgrid.published', $item->publicevent, $i, 'events.setPublicity_'); ?></td>
+                        <td class=" center"><?php echo JHTML::_('jgrid.published', $item->published, $i, 'events.' ); ?></td>
+                        <td class=" center"><?php echo JHTML::_('jgrid.published', $item->mandatory, $i, 'events.setMandatority_'); ?></td>
+                        <td class=" center"><?php echo JHTML::_('date', $item->datum,   JText::_('DATE_FORMAT_SCET1'), 'UTC');?></td>
+                        <td class=" center"><?php echo JHTML::_('date', $item->uhrzeit, JText::_('TIME_FORMAT_SCET1'), 'UTC');?></td>
                         <td><?php echo $item->id; ?></td>
                     </tr>
             <?php

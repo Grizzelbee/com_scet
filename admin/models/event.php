@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 2.5.23                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!

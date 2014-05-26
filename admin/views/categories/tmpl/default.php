@@ -5,7 +5,7 @@
 // @file        : admin/views/categories/tmpl/default.php               //
 // @implements  :                                                       //
 // @description : Template for the Categories-List-View                 //
-// Version      : 2.5.24                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC')or die('Restricted access');
@@ -38,7 +38,15 @@ $sortFields = $this->getSortFields();
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_scet&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
-		<div id="filter-bar" class="btn-toolbar">
+	<?php if (!empty( $this->sidebar)) : ?>
+		<div id="j-sidebar-container" class="span2">
+			<?php echo $this->sidebar; ?>
+		</div>
+		<div id="j-main-container" class="span10">
+	<?php else : ?>
+		<div id="j-main-container">
+	<?php endif;?>
+	<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_JTODO_ITEMS_SEARCH_FILTER_DESC');?></label>
 				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_SCET_ITEMS_SEARCH_FILTER'); ?>" />
@@ -56,16 +64,16 @@ $sortFields = $this->getSortFields();
 				<th width="1%" class="nowrap center hidden-phone">
 					<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'ordering', $this->listDirn, $this->listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 				</th>
-				<th width="1%" class="hidden-phone">
+				<th width="1%" class="hidden-phone center">
 					<?php echo JHtml::_('grid.checkall'); ?>
 				</th>
-                <th  class="title">
+                <th  class="title nowrap">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_CATEGORY', 'category', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th width="5%" align="center">
+                <th width="5%" class=" center">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_PUBLISHED', 'published', $this->listDirn, $this->listOrder); ?>
                </th>
-                <th width="5%" align="center">
+                <th width="5%" class=" center">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_PUBLIC', 'publiccategory', $this->listDirn, $this->listOrder); ?>
                </th>
                 <th width="5">
@@ -98,8 +106,8 @@ $sortFields = $this->getSortFields();
 						</td>
                         <td><?php echo JHTML::_('grid.id', $i, $item->id); ?></td>
                         <td><a href="<?php echo $link; ?>"><?php echo $item->category; ?></a></td>
-                        <td align="center"><?php echo JHTML::_('jgrid.published', $item->published, $i, 'categories.' ); ?></td>
-                        <td align="center"><?php echo JHTML::_('jgrid.published', $item->publiccategory, $i, 'categories.publicity_' ); ?></td>
+                        <td class="center"><?php echo JHTML::_('jgrid.published', $item->published, $i, 'categories.' ); ?></td>
+                        <td class="center"><?php echo JHTML::_('jgrid.published', $item->publiccategory, $i, 'categories.publicity_' ); ?></td>
                         <td><?php echo $item->id; ?></td>
                     </tr>
 

@@ -5,7 +5,7 @@
 // @file        : admin/views/event/tmpl/edit.php                       //
 // @implements  :                                                       //
 // @description : Template for the single event Edit-View               //
-// Version      : 2.5.22                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!

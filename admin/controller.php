@@ -5,7 +5,7 @@
 // @file        : admin/controller.php (General-Controller-File)        //
 // @implements  : Class SCET-Controller                                 //
 // @description : General (Main-)Controller for the SCET-Component      //
-// Version      : 2.5.24                                                 //
+// Version      : 3.0.0                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!

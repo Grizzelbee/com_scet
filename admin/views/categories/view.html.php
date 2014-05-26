@@ -5,7 +5,7 @@
 // @file        : admin/views/categories/view.html.php                  //
 // @implements  : Class scetViewCategories                              //
 // @description : Main-entry for the categories-Listview                //
-// Version      : 2.5.24                                                //
+// Version      : 3.0.0                                                //
 // *********************************************************************//
 // no direct access to this file
 defined('_JEXEC') or die( 'Restricted Access' );
@@ -23,7 +23,6 @@ class scetViewCategories extends JViewLegacy
         // Get order state
         $this->listOrder = $this->escape($this->state->get( 'list.ordering'  ));
         $this->listDirn  = $this->escape($this->state->get( 'list.direction' ));
-        $this->saveorder = $this->listOrder == 'ordering';
 
         // include custom fields
         require_once JPATH_COMPONENT .'/models/fields/categories.php';
