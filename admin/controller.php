@@ -5,7 +5,7 @@
 // @file        : admin/controller.php (General-Controller-File)        //
 // @implements  : Class SCET-Controller                                 //
 // @description : General (Main-)Controller for the SCET-Component      //
-// Version      : 2.5.17                                                 //
+// Version      : 2.5.24                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -18,9 +18,11 @@ class SCETController extends JControllerLegacy
 {
 	function display($cachable = false, $urlparams = false)
 	{
+        // include the Helper-Class
+        require_once JPATH_COMPONENT.'/helpers/scet.php';
 		// set default view if not set
 		JRequest::setVar('view', JRequest::getCmd('view', 'Events'));
- 
+
 		// call parent behavior
 		parent::display($cachable);	}
 

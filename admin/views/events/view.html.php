@@ -1,24 +1,21 @@
-<?php 
+<?php
 // *********************************************************************//
 // Project      : SCET for Joomla                                       //
 // @package     : com_scet                                              //
 // @file        : admin/views/events/view.html.php                      //
 // @implements  : Class ScetViewEvents                                  //
 // @description : Main-entry for the event-Listview                     //
-// Version      : 2.5.18                                                //
+// Version      : 2.5.24                                                //
 // *********************************************************************//
 
 // no direct access to this file
-defined('_JEXEC') or die( 'Restricted Access' ); 
-jimport('joomla.application.component.view'); 
+defined('_JEXEC') or die( 'Restricted Access' );
+jimport('joomla.application.component.view');
 
 class SCETViewEvents extends JViewLegacy
-{ 
-    function display($tpl = null) 
+{
+    function display($tpl = null)
     {
-        // Add Toolbat to View
-        $this-> addToolbar();
-        
         // Get data from the model
         $this->pagination = $this->get( 'Pagination' );
         $this->items	  = $this->get( 'Items' );
@@ -27,14 +24,19 @@ class SCETViewEvents extends JViewLegacy
         // Get order state
         $this->listOrder = $this->escape($this->state->get( 'list.ordering'  ));
         $this->listDirn  = $this->escape($this->state->get( 'list.direction' ));
-        
+
         // include custom fields
         require_once JPATH_COMPONENT .'/models/fields/categories.php';
         require_once JPATH_COMPONENT .'/models/fields/publicity.php';
         require_once JPATH_COMPONENT .'/models/fields/mandatority.php';
-        
-        parent::display($tpl); 
-    } 
+
+        // Add Toolbar to View
+        scetHelper::addSubmenu('events');
+        $this->addToolbar();
+        $this->sidebar = JHtmlSidebar::render();
+
+        parent::display($tpl);
+    }
 
     function addToolbar()
     {
@@ -50,7 +52,44 @@ class SCETViewEvents extends JViewLegacy
         JToolBarHelper::unpublishList('events.unpublish');
         JToolBarHelper::divider();
         JToolBarHelper::preferences('com_scet');
+
+        JHtmlSidebar::setAction('index.php?option=com_scet');
+
+        // category
+        JHtmlSidebar::addFilter(
+        JText::_('COM_SCET_CHOOSE_CATEGORY'),
+        'filter_published',
+        JHtml::_('select.options', JFormFieldCategories::getOptions(), 'value', 'text', $this->state->get('filter.category'), true)
+        );
+        // state
+        JHtmlSidebar::addFilter(
+        JText::_('JOPTION_SELECT_PUBLISHED'),
+        'filter_published',
+        JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
+        );
+        // publicity
+        JHtmlSidebar::addFilter(
+        JText::_('COM_SCET_SELECT_PUBLICITY'),
+        'filter_published',
+        JHtml::_('select.options', JFormFieldPublicity::getOptions(), 'value', 'text', $this->state->get('filter.publicity'), true)
+        );
+        // mandatority
+        JHtmlSidebar::addFilter(
+        JText::_('COM_SCET_SELECT_MANDATORITY'),
+        'filter_published',
+        JHtml::_('select.options', JFormFieldMandatority::getOptions(), 'value', 'text', $this->state->get('filter.mandatority'), true)
+        );
+
     }
 
-} 
+    protected function getSortFields()
+    {
+     	return array(
+       			'ordering' => JText::_('JGRID_HEADING_ORDERING'),
+       			'published' => JText::_('JSTATUS'),
+       			'id' => JText::_('JGRID_HEADING_ID')
+       	);
+    }
+
+}
 ?>

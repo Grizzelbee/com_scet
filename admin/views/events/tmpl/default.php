@@ -1,59 +1,65 @@
-<?php 
+<?php
 // *********************************************************************//
 // Project      : SCET for Joomla                                       //
 // @package     : com_scet                                              //
 // @file        : admin/views/events/tmpl/default.php                   //
 // @implements  :                                                       //
 // @description : Template for the Events-List-View                     //
-// Version      : 2.5.19                                                //
+// Version      : 2.5.24                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC')or die('Restricted access'); 
-JHTML::_('behavior.tooltip'); 
-JHTML::_('behavior.multiselect'); 
-require(JPATH_COMPONENT.DS.'views'.DS.'navigation.inc.php');
-?> 
-<form action="<?php echo JRoute::_('index.php?option=com_scet&view=Events'); ?>" method="post" name="adminForm" id="adminForm">
-	<fieldset id="filter-bar">
-        <div id="filter-bar" class="btn-toolbar">
-            <div class="filter-search fltlft btn-group">
-                <label class="filter-search-lbl pull-left" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-                <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_SCET_ITEMS_SEARCH_FILTER'); ?>" />
-                <button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-                <button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
-            </div>
-            <div class="filter-select fltrt btn-group">
-                <select name="filter_category" class="inputbox" onchange="this.form.submit()">
-                    <option value=""><?php echo JText::_('COM_SCET_CHOOSE_CATEGORY');?></option>
-                    <?php echo JHtml::_('select.options', JFormFieldCategories::getOptions(), 'value', 'text', $this->state->get('filter.category'));?>
-                </select>
-                <select name="filter_publicity" class="inputbox" onchange="this.form.submit()">
-                    <option value=""><?php echo JText::_('COM_SCET_SELECT_PUBLICITY');?></option>
-                    <?php echo JHtml::_('select.options', JFormFieldPublicity::getOptions(), 'value', 'text', $this->state->get('filter.publicity'), true); ?>
-                </select>
-                <select name="filter_state" class="inputbox" onchange="this.form.submit()">
-                    <option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
-                    <?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.state'), true); ?>
-                </select>
-                <select name="filter_mandatority" class="inputbox" onchange="this.form.submit()">
-                    <option value=""><?php echo JText::_('COM_SCET_SELECT_MANDATORITY');?></option>
-                    <?php echo JHtml::_('select.options', JFormFieldMandatority::getOptions(), 'value', 'text', $this->state->get('filter.mandatority'), true); ?>
-                </select>
-            </div>
-        </div>
-    </fieldset>
-    <div class="clr"> </div>
-    
-    <table class="adminlist">
+defined('_JEXEC')or die('Restricted access');
+JHtml::_('bootstrap.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
+$saveOrder	= $this->listOrder == 'ordering';
+if ($saveOrder)
+{
+	$saveOrderingUrl = 'index.php?option=com_scet&task=events.saveOrderAjax&tmpl=component';
+	JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($this->listDirn), $saveOrderingUrl);
+}
+$sortFields = $this->getSortFields();
+?>
+<script type="text/javascript">
+	Joomla.orderTable = function()
+	{
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>')
+		{
+			dirn = 'asc';
+		}
+		else
+		{
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+<form action="<?php echo JRoute::_('index.php?option=com_scet&view=events'); ?>" method="post" name="adminForm" id="adminForm">
+		<div id="filter-bar" class="btn-toolbar">
+			<div class="filter-search btn-group pull-left">
+				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_JTODO_ITEMS_SEARCH_FILTER_DESC');?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_SCET_ITEMS_SEARCH_FILTER'); ?>" />
+			</div>
+			<div class="btn-group pull-left">
+				<button type="submit" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+				<button type="button" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+			</div>
+    </div>
+    <div class="clearfix"> </div>
+
+		<table class="table table-striped" id="articleList">
         <thead>
             <tr>
-                <th width="5">
-                    <?php echo JText::_( '#' ); ?>
-                </th>
-                <th width="20">
-                    <input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->items ); ?>);" />
-                </th>
-                <th  class="title">
+				<th width="1%" class="nowrap center hidden-phone">
+					<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'ordering', $this->listDirn, $this->listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+				</th>
+				<th width="1%" class="hidden-phone">
+					<?php echo JHtml::_('grid.checkall'); ?>
+				</th>
+                    <th  class="title">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_EVENT', 'event', $this->listDirn, $this->listOrder); ?>
                 </th>
                 <th  class="title">
@@ -80,8 +86,8 @@ require(JPATH_COMPONENT.DS.'views'.DS.'navigation.inc.php');
             </tr>
         </thead>
         <tbody>
-            <?php  
-                foreach($this->items as $i => $item) : 
+            <?php
+                foreach($this->items as $i => $item) :
                     $link = JRoute::_( 'index.php?option=com_scet&task=event.edit&id='.(int)$item->id );
             ?>
                     <tr class="row<?php echo $i % 2; ?>">
@@ -96,24 +102,24 @@ require(JPATH_COMPONENT.DS.'views'.DS.'navigation.inc.php');
                         <td align="center"><?php echo JHTML::_('date', $item->uhrzeit, JText::_('TIME_FORMAT_SCET1'), 'UTC');?></td>
                         <td><?php echo $item->id; ?></td>
                     </tr>
-            <?php 
-                endforeach; 
+            <?php
+                endforeach;
             ?>
         <tbody>
         <tfoot>
             <tr>
                 <td colspan="10">
-                    <?php echo $this->pagination->getListFooter() 
+                    <?php echo $this->pagination->getListFooter()
                                .'<br>'
-                               . $this->pagination->getResultsCounter(); 
+                               . $this->pagination->getResultsCounter();
                     ?>
                     <p>
                     <center>SCET (Small Community Event Table for Joomla) v<?php echo _SCET_VERSION; ?></center>
                     <center>Copyright &copy; 2011-<?php echo date('Y', time() )?> by Hanjo Hingsen, Webmaster of  <a href="http://www.treu-zu-kaarst.de">http://www.treu-zu-kaarst.de</a>, All Rights reserved</center>
                 </td>
             </tr>
-        </tfoot>            
-    </table> 
+        </tfoot>
+    </table>
     <div>
         <input type="hidden" name="task"             value = "" />
         <input type="hidden" name="boxchecked"       value = "0" />
