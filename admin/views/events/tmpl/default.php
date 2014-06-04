@@ -5,7 +5,7 @@
 // @file        : admin/views/events/tmpl/default.php                   //
 // @implements  :                                                       //
 // @description : Template for the Events-List-View                     //
-// Version      : 3.0.0                                                //
+// Version      : 3.0.1                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC')or die('Restricted access');
@@ -55,7 +55,10 @@ $sortFields = $this->getSortFields();
 				<button type="submit" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
 				<button type="button" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
 			</div>
-    </div>
+	      <div name="pagination_limiter" id="pagination_limiter" class="btn-group pull-right">
+	         <?php echo $this->pagination->getLimitBox(); ?>
+	      </div>
+	</div>
     <div class="clearfix"> </div>
 
 		<table class="table table-striped" id="articleList">
@@ -67,25 +70,25 @@ $sortFields = $this->getSortFields();
 				<th width="1%" class="hidden-phone">
 					<?php echo JHtml::_('grid.checkall'); ?>
 				</th>
-                    <th  class="title">
+                    <th  class="title nowrap">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_EVENT', 'event', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th  class="title">
+                <th  class="title nowrap">
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_CATEGORY', 'category', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th width="5%" align="center">
+                <th width="5%" >
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_PUBLIC', 'public', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th width="5%" align="center">
+                <th width="5%" >
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_PUBLISHED', 'published', $this->listDirn, $this->listOrder); ?>
                </th>
-                <th width="5%" nowrap="nowrap">
+                <th width="5%" >
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_MANDATORY', 'mandatory', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th width="10%" align="center">
+                <th width="5%" >
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_DATE', 'datum', $this->listDirn, $this->listOrder); ?>
                 </th>
-                <th width="10%" align="center">
+                <th width="5%" >
                     <?php echo JHTML::_('grid.sort', 'COM_SCET_TIME', 'uhrzeit', $this->listDirn, $this->listOrder); ?>
                 </th>
                 <th width="5">
@@ -101,8 +104,8 @@ $sortFields = $this->getSortFields();
                     <tr class="row<?php echo $i % 2; ?>">
                         <td><?php echo sprintf('%02d', $this->pagination->limitstart+$i+1); ?></td>
                         <td><?php echo JHTML::_('grid.id', $i, $item->id); ?></td>
-                        <td><a href="<?php echo $link; ?>"><?php echo $item->event; ?></a></td>
-                        <td class=" center"><?php echo $item->category;?></td>
+                        <td class="nowrap"><a href="<?php echo $link; ?>"><?php echo $item->event; ?></a></td>
+                        <td class=" nowrap"><?php echo $item->category;?></td>
                         <td class=" center"><?php echo JHTML::_('jgrid.published', $item->publicevent, $i, 'events.setPublicity_'); ?></td>
                         <td class=" center"><?php echo JHTML::_('jgrid.published', $item->published, $i, 'events.' ); ?></td>
                         <td class=" center"><?php echo JHTML::_('jgrid.published', $item->mandatory, $i, 'events.setMandatority_'); ?></td>
