@@ -1,4 +1,4 @@
-<?php 
+<?php
 // *********************************************************************//
 // Project      : SCET for Joomla                                       //
 // @package     : com_scet                                              //
@@ -6,10 +6,10 @@
 // @implements  : Class scetModelCategories                             //
 // @description : Model for the DB-Manipulation of the                  //
 //                scet-Categories-List                                  //
-// Version      : 2.5.19                                                //
+// Version      : 3.0.2                                                //
 // *********************************************************************//
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die( 'Restricted Access' ); 
+defined('_JEXEC') or die( 'Restricted Access' );
 jimport( 'joomla.application.component.modellist' );
 
 class scetModelCategories extends JModelList
@@ -28,7 +28,7 @@ class scetModelCategories extends JModelList
         }
         parent::__construct($config);
     }
-    
+
 	/**
 	 * Returns the query
 	 * @return string The query to be used to retrieve the rows from the database
@@ -46,7 +46,7 @@ class scetModelCategories extends JModelList
         //Search
         $search = $this->getState('filter.search');
         if (!empty($search)) {
-            $search = $db->Quote('%'.$db->getEscaped($search, true).'%', false);
+            $search = $db->Quote('%'.$db->escape($search, true).'%', false);
             $query->where('(category LIKE '.$search.')');
         }
 
@@ -64,16 +64,16 @@ class scetModelCategories extends JModelList
             $orderDirn = 'ASC';
         }
         $query->order($db->escape($orderCol.' '.$orderDirn));
-        
+
         return $query;
 	}
-   
+
 
     protected function populateState($ordering = null, $direction = null)
     {
         $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
-     
+
         $state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
         $this->setState('filter.state', $state);
 
@@ -81,6 +81,6 @@ class scetModelCategories extends JModelList
         parent::populateState('ordering', 'ASC');
     }
 
-    
+
 }
 ?>

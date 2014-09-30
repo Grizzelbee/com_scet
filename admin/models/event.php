@@ -1,4 +1,4 @@
-<?php 
+<?php
 // *********************************************************************//
 // Project      : SCET for Joomla                                       //
 // @package     : com_scet                                              //
@@ -6,18 +6,18 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 3.0.0                                                //
+// Version      : 3.0.3                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die( 'Restricted Access' ); 
+defined('_JEXEC') or die( 'Restricted Access' );
 jimport( 'joomla.application.component.modeladmin' );
 
 class SCETModelEvent extends JModelAdmin
 {
    	var $_categories = null;
 
-    
+
     /**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -31,7 +31,7 @@ class SCETModelEvent extends JModelAdmin
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-    
+
 	/**
 	 * Method to get the record form.
 	 *
@@ -43,17 +43,17 @@ class SCETModelEvent extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
         $form = $this->loadForm(
-                'com_scet.event', 
-                'event', 
+                'com_scet.event',
+                'event',
                  array('control' => 'jform', 'load_data' => $loadData));
         if (empty($form))
         {
             return false;
         }
-     
+
         return $form;
-	}	
-     
+	}
+
     /**
      * Method to get the data that should be injected in the form.
      *
@@ -74,10 +74,10 @@ class SCETModelEvent extends JModelAdmin
                 $data->inserted = $data->updated;
             }
         }
-        return $data;	
+        return $data;
     }
-    
-    
+
+
 	function getCategories()
 	{
 		// Lets load the data if it doesn't already exist
@@ -88,26 +88,26 @@ class SCETModelEvent extends JModelAdmin
 		}
 		return $this->_categories;
 	}
-    
+
     public function isInstalled($component)
     {
         $db	=    JFactory::getDBO();
         $query = $db->getQuery(true);
-        
+
         $query->select('extension_id');
 		$query->from('#__extensions');
 		$query->where('element = \''. $component.'\';');
 		$db->setQuery( $query );
         $result = $db->loadObject();
-       
+
         return !empty($result);
     }
-    
+
     public function getMailReceipients()
     {
         $db	=& JFactory::getDBO();
         $query = $db->getQuery(true);
-        
+
         $query->select('email_priv, vorname');
 		$query->from('#__jschuetze_mitglieder');
 		$query->where('scet_mail_notification = 1');
@@ -115,16 +115,16 @@ class SCETModelEvent extends JModelAdmin
 
         return $db->loadObjectList();
     }
-    
+
     public function getVCalFile($data)
     {
-		$shortHost = JURI::getInstance()->getHost(); 
-		if ( substr($shortHost, 3, 1) == '.') 
+		$shortHost = JURI::getInstance()->getHost();
+		if ( substr($shortHost, 3, 1) == '.')
 		{
 			$shortHost = substr($shortHost, 5, strlen($shortHost)-1);
 		}
 		$config      = JFactory::getConfig();
-		
+
     	$fileContent  = "BEGIN:VCALENDAR\r\n";
     	$fileContent .= "VERSION:2.0\r\n";
     	$fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
@@ -135,24 +135,24 @@ class SCETModelEvent extends JModelAdmin
      	$fileContent .= 'LOCATION:' . $data['location'] . "\r\n";
       	$fileContent .= 'SUMMARY:' . $data['event'] . "\r\n";
       	$fileContent .= 'DESCRIPTION:';
-      	if ($data['mandatory'] == '1') 
-      	{ 
+      	if ($data['mandatory'] == '1')
+      	{
    			$fileContent .= "Pflichttermin\r\n";
       	} else {
       		$fileContent .= "kein Pflichttermin\r\n";
       	}
       	$fileContent .= "CLASS:PUBLIC\r\n";
-      	$fileContent .= 'DTSTART:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
-      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['endezeit']) . "\r\n";
-      	$fileContent .= 'DTSTAMP:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', $data['uhrzeit']) . "\r\n";
+      	$fileContent .= 'DTSTART:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['uhrzeit']))) . "\r\n";
+      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['endezeit']))) . "\r\n";
+      	$fileContent .= 'DTSTAMP:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['uhrzeit']))) . "\r\n";
       	$fileContent .= "END:VEVENT\r\n";
       	$fileContent .= "END:VCALENDAR\r\n";
 
-    	return $fileContent; 
+    	return $fileContent;
     }
-    
-    
-    
+
+
+
     public function sendMailNotification($data)
     {
         $mailer      = JFactory::getMailer();
@@ -170,7 +170,7 @@ class SCETModelEvent extends JModelAdmin
 		        fwrite($temp, $this->getVCalFile($data) );
 		        fclose($temp);
 				$mailer->addAttachment($tempfile, 'event.ics', 'base64', 'text/v-calendar');
-		
+
 		        if ($data['id'] == 0){
 		            $mailer->setSubject($params->get('new_subject'));
 		            $body = str_replace( $textmarken, $daten, $params->get('new_mailbody') ) ;
@@ -178,15 +178,15 @@ class SCETModelEvent extends JModelAdmin
 		            $mailer->setSubject($params->get('changed_subject'));
 		            $body = str_replace( $textmarken, $daten, $params->get('changed_mailbody') ) ;
 		        }
-		        
+
 		        $successful = 0;
 		        foreach($receipients as $receipient):
 		            $mailer->ClearAllRecipients();
 		            $mailer->addRecipient( $receipient->email_priv );
-		
+
 		            $mailbody = str_replace('[Vorname]', $receipient->vorname, $body);
 		            $mailer->setBody($mailbody);
-		     
+
 		            $send = $mailer->Send();
 		            if ( $send )
 		            {
@@ -209,37 +209,37 @@ class SCETModelEvent extends JModelAdmin
         } else {
             JFactory::getApplication()->enqueueMessage(sprintf(JText::_('COM_SCET_MAIL_SENT'), $successful ) );
         }
-        
+
     }
-    
-    
+
+
     public function save($data)
     {
         if ($this->isInstalled('com_jschuetze') and ($data['published']=='1') ) {
             $this->sendMailNotification($data);
         }
-        
-        $data['inserted'] = JFactory::getDate($data['inserted'], 'UTC')->toMySQL();
-        $data['updated']  = JFactory::getDate($data['updated'], 'UTC')->toMySQL();
-        $data['datum']    = JFactory::getDate($data['datum'], 'UTC')->toMySQL();
-        
+
+        $data['inserted'] = JFactory::getDate($data['inserted'], 'UTC')->toSQL();
+        $data['updated']  = JFactory::getDate($data['updated'], 'UTC')->toSQL();
+        $data['datum']    = JFactory::getDate($data['datum'], 'UTC')->toSQL();
+
         return parent::save($data);
     }
-    
+
     public function setDBField($fieldname, $state, $cids)
     {
         $db    = JFactory::getDBO();
         $query = $db->getQuery(true);
-        
+
         $query->update('#__scet_events');
         $query->set($fieldname .' = '.$state);
         $query->where('id in ('.implode($cids, ',').')');
-        
+
         $db->setQuery($query);
         $db->query();
-        
+
         return $db->getAffectedRows();
     }
-    
+
 }
 ?>

@@ -1,5 +1,17 @@
 Versionshistorie:
 -----------------
+Version 3.0.3
+    [!] Bei neuen Terminen funktionierte die angehängte Termin-Datei nicht richtig.
+        Der Termin konnte nicht in den Kalender übernommen werden. Das funktioniert jetzt wieder sauber.
+2014-09-30
+
+Version 3.0.2
+    [!] Beim Speichern von Terminen kam ein Fehler 500 wg. Aufruf
+        einer Funktion, die es in J!3 nicht mehr gibt.
+    [!] Suchen-Feld bei den Terminen und den Kategorien funktionierte nicht
+    [+] Neue Sortierreihenfolge bei den Events. Dort wird jetzt auch die Sortierung der Kategorien beachtet.
+2014-06-09
+
 Version 3.0.1
     [+] Optik an ein paar Stellen etwas geglättet
     [!] Ein paar kleine Bugfixes
@@ -9,24 +21,24 @@ Version 3.0.0
     [+] komplette Kompatibilität zu Joomla 3 hergestellt; incl. Look&Feel
     [-] Nicht mehr kompatibel mit Joomla 2.5
     [!] Ein paar Filter in der Terminlistenansicht repariert
-2014-05-26 
+2014-05-26
 
 Version 2.5.23
-    [!] Termine (die event.ics Datei) werden jetzt auch unter iOS 7.x 
+    [!] Termine (die event.ics Datei) werden jetzt auch unter iOS 7.x
 	    wieder erkannt und können mit einfachem Klick in den Kalender aufgenommen werden.
-2014-04-27    
+2014-04-27
 
-Version 2.5.22
+	Version 2.5.22
     [+] Neues Feld "endezeit" eingeführt.
     [+] Name der Datei, die bei den Terminbenachrichtigungen mitgesendet wird, kann jetzt konfiguriert werden.
     [+] Datumsangaben können jetzt überall in deutscher Notation angegeben werden und werden vor dem Speichern in MySQL-Notation konvertiert.
     [+] Benachrichtigungs-Mail wird nur noch für freigegebene Termine gesendet.
     [+] Diverse fehlende Feld-Beschreibungen ergänzt
     [+] Die Termineigabeseite hält jetzt die Session lebendig
-2013-11-28    
-     
+2013-11-28
+
 Version 2.5.21
-    [!] Fehler bei der Ermittlung der Stringlänge im Hostnamen behoben. Da wurde eine falsche Funktion aufgerufen. 
+    [!] Fehler bei der Ermittlung der Stringlänge im Hostnamen behoben. Da wurde eine falsche Funktion aufgerufen.
 2013.10.23
 
 Version 2.5.20
@@ -80,26 +92,26 @@ Version 2.5.11
 2013.02.01
 
 Version 2.5.10
-    [+] Die Menüpunkte haben jetzt Icons 
+    [+] Die Menüpunkte haben jetzt Icons
     [~] Einige noch hart codierte Menüpunkt-Tooltipps in die Sprachdateien ausgelagert.
     [~] DB-Feld DUTY in MANDATORY umbenannt; dadurch mussten alle Dateien, die auf das Feld zugriffen
         angepasst werden.
     [+] Bei der Eingabe eines neuen Termins: Ein "Speichern + Neu" Button eingebaut
-    [+] Option "Jahrestag" eingebaut. Dann können Jahrestage, wie z.B. Geburtstage 
-        mit dem Original-Datum eingegeben und jährlich wieder angezeigt werden. 
-        In dem Fall einen Integer-Format-String mit einbauen, damit in die Iteration 
-        (Hanjos %d. Geburtstag --> Hanjos 40. Geburtstag) mit ausgegeben werden kann. 
+    [+] Option "Jahrestag" eingebaut. Dann können Jahrestage, wie z.B. Geburtstage
+        mit dem Original-Datum eingegeben und jährlich wieder angezeigt werden.
+        In dem Fall einen Integer-Format-String mit einbauen, damit in die Iteration
+        (Hanjos %d. Geburtstag --> Hanjos 40. Geburtstag) mit ausgegeben werden kann.
         Bei Jahrestagen, wird die korrekte Differenz automatisch berechnet. Bei allen anderen
         Terminen steht da 0 (Null).
-    [+] Im Frontend werden Jahrestage immer bis zum 31.12. eines Jahres (als abgelaufen) angezeigt. 
-        Die neue Runde beginnt immer am 01.01. eines neuen Jahres. 
+    [+] Im Frontend werden Jahrestage immer bis zum 31.12. eines Jahres (als abgelaufen) angezeigt.
+        Die neue Runde beginnt immer am 01.01. eines neuen Jahres.
     [+] SCET-Notifier hat auch gelernt mit den Jahrestagen umzugehen (Version 2.5.6)
-    [!] Der Delete-Button und die Veröffentlichen/Sperren-Buttons funktionieren wieder; 
+    [!] Der Delete-Button und die Veröffentlichen/Sperren-Buttons funktionieren wieder;
         durch das ReWrite hatten die ihre Funktion verloren.
     [+] Die beiden Event-Views haben jetzt einen Kalender als Icon
 2012-10-08
 
-Version 2.5.9 
+Version 2.5.9
     Backend:
     [!] Der Menüpunkt "Termine verwalten" zeigte noch auf den alten View und führte somit zu einem Fehler
     [!] Das Freigeben/Veröffentlichen/Verpflichten funktionierte in der Listenansicht der Termine nicht und
@@ -107,9 +119,9 @@ Version 2.5.9
     [!] Das Feld "Ort" im neuen Termine-Bearbeitungsforular vergessen. Ist jetzt wieder vorhanden.
     [!] Schreibfehler in der deutschen Sprachdatei korrigiert
     [~] Englische Sprachdateien komplett neu erstellt
-2012-09-07    
-    
-    Version 2.5.8 
+2012-09-07
+
+    Version 2.5.8
     Backend:
     [~] Den Event-Manager-Teil des Backends komplett von Grund auf neu geschrieben
     [+] Im Backend SuchFilter eingebaut
@@ -118,21 +130,21 @@ Version 2.5.9
     [+] Im Backend Filter für die Öffentlichkeit eingebaut
     [+] Im Backend Filter für die Verpflichtung eingebaut
     [+] Im Backend Pagination für die Events eingebaut
-    [+] Im Backend wird jetzt in der Listenansicht der Events auch das Feld PFLICHT angezeigt. 
-    
+    [+] Im Backend wird jetzt in der Listenansicht der Events auch das Feld PFLICHT angezeigt.
+
     Frontend:
     [~] Frontend: Legende wird jetzt etwas schöner formatiert
 2012-08-15
 
-Version 2.5.7 
-    [~] Diverse kleinere Änderungen 
+Version 2.5.7
+    [~] Diverse kleinere Änderungen
 2012-03-18
 
 Version 2.5.6 // erste komplett lauffähige Version für Joomla 2.5
     [-] Es wird keine Kombiversion für Joomla 1.5 / 2.5 geben. die Unterstütung für Joomla 1.5 endet mit der SCET-Version 0.9.30
     [X] Auf Joomla 2.5 portiert. Dafür waren diverse Anpassungen notwendig.
     [X] Hover-Farbe auf ein Pastellgelb angepasst. Das reine Gelb war zu grell.
-    [X] Wenn User beim Seitenaufruf eingeloggt ist, wird dieser letzte Aufruf in der DB protokolliert. 
+    [X] Wenn User beim Seitenaufruf eingeloggt ist, wird dieser letzte Aufruf in der DB protokolliert.
         Dadurch kann die Neu/Update Anzeige sich auch auf diesen Timestamp beziehen und damit wesentlich präziser arbeiten.
     [x] Updateserver hinzugefügt
 2012-02-14
@@ -148,30 +160,30 @@ Version 0.9.27
     [X] Darf bei Update die Datenbank nicht mehr leeren
     [X] Als Standard in die Ansicht "Events" springen
     [!] Beim Speichern der Daten wurden das Update-Datum und das Insert-Datum nicht korrekt gesetzt
-2012-01-13    
+2012-01-13
 
 
 Version 0.9.17
     [+] Sprachdateien vervollständigt und aktualisiert
     [+] Diese Datei hier erstellt
-2011-12-08    
+2011-12-08
 
 Version 0.9.16
     [+] erste funktionierende Version
-2011-12-07    
-    
+2011-12-07
+
 In Verison 0.9.16 erledigt:
 ---------------------------
 Front-End-Features:
--------------------            
-[X] => Die Termine sollen in Tabellen untereinander aufgelistet werden. 
-[X] => Eine Tabelle pro Kategorie. 
+-------------------
+[X] => Die Termine sollen in Tabellen untereinander aufgelistet werden.
+[X] => Eine Tabelle pro Kategorie.
 [X] => Die Reihenfolge der Kategorien gibt die Sortorder vor.
 [X] => Innerhalb der Tabellen werden die Termine nach Datum und Uhrzeit sortiert.
-[X] => Neue oder aktualisierte Termine sollen mit einer Grafik "NEU" oder "Update" markiert werden. 
+[X] => Neue oder aktualisierte Termine sollen mit einer Grafik "NEU" oder "Update" markiert werden.
       ! Alles was sich seit dem letzten Login geändert hat !
 [X] => Events mit einem grünen Pfeil HEUTE markieren !
-[X] => Bei der Anzeige der Termine muss weiterhin der Accesslevel (Öffentlich, registered, ...) berücksichtigt werden. 
+[X] => Bei der Anzeige der Termine muss weiterhin der Accesslevel (Öffentlich, registered, ...) berücksichtigt werden.
 [X] => Nach überschreiten des Termins wird dieser in grauer Schriftfarbe geschrieben
 [X] => Events können als öffentlich / nicht öffentlich deklariert werden
 [X] => Lokalisierung über language.ini Dateien
