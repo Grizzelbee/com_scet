@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 3.0.3                                                 //
+// Version      : 3.0.4                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -15,33 +15,33 @@ jimport( 'joomla.application.component.modeladmin' );
 
 class SCETModelEvent extends JModelAdmin
 {
-   	var $_categories = null;
+      var $_categories = null;
 
 
     /**
-	 * Returns a reference to the a Table object, always creating it.
-	 *
-	 * @param	type	The table type to instantiate
-	 * @param	string	A prefix for the table class name. Optional.
-	 * @param	array	Configuration array for model. Optional.
-	 * @return	JTable	A database object
-	 * @since	1.6
-	 */
+    * Returns a reference to the a Table object, always creating it.
+    *
+    * @param	type	The table type to instantiate
+    * @param	string	A prefix for the table class name. Optional.
+    * @param	array	Configuration array for model. Optional.
+    * @return	JTable	A database object
+    * @since	1.6
+    */
     public function getTable($type = 'Event', $prefix = 'SCETTable', $config = array())
-	{
-		return JTable::getInstance($type, $prefix, $config);
-	}
+   {
+      return JTable::getInstance($type, $prefix, $config);
+   }
 
-	/**
-	 * Method to get the record form.
-	 *
-	 * @param	array	$data		Data for the form.
-	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
-	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+   /**
+    * Method to get the record form.
+    *
+    * @param	array	$data		Data for the form.
+    * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
+    * @return	mixed	A JForm object on success, false on failure
+    * @since	1.6
+    */
+   public function getForm($data = array(), $loadData = true)
+   {
         $form = $this->loadForm(
                 'com_scet.event',
                 'event',
@@ -52,7 +52,7 @@ class SCETModelEvent extends JModelAdmin
         }
 
         return $form;
-	}
+   }
 
     /**
      * Method to get the data that should be injected in the form.
@@ -78,16 +78,16 @@ class SCETModelEvent extends JModelAdmin
     }
 
 
-	function getCategories()
-	{
-		// Lets load the data if it doesn't already exist
-		if (empty( $this->_categories ))
-		{
-			$query             = 'SELECT id, category from #__scet_categories where published = 1';
-			$this->_categories = $this->_getList( $query );
-		}
-		return $this->_categories;
-	}
+   function getCategories()
+   {
+      // Lets load the data if it doesn't already exist
+      if (empty( $this->_categories ))
+      {
+         $query             = 'SELECT id, category from #__scet_categories where published = 1';
+         $this->_categories = $this->_getList( $query );
+      }
+      return $this->_categories;
+   }
 
     public function isInstalled($component)
     {
@@ -95,9 +95,9 @@ class SCETModelEvent extends JModelAdmin
         $query = $db->getQuery(true);
 
         $query->select('extension_id');
-		$query->from('#__extensions');
-		$query->where('element = \''. $component.'\';');
-		$db->setQuery( $query );
+        $query->from('#__extensions');
+        $query->where('element = \''. $component.'\';');
+        $db->setQuery( $query );
         $result = $db->loadObject();
 
         return !empty($result);
@@ -109,46 +109,53 @@ class SCETModelEvent extends JModelAdmin
         $query = $db->getQuery(true);
 
         $query->select('email_priv, vorname');
-		$query->from('#__jschuetze_mitglieder');
-		$query->where('scet_mail_notification = 1');
-		$db->setQuery( $query );
+        $query->from('#__jschuetze_mitglieder');
+        $query->where('scet_mail_notification = 1');
+        $db->setQuery( $query );
 
         return $db->loadObjectList();
     }
 
     public function getVCalFile($data)
     {
-		$shortHost = JURI::getInstance()->getHost();
-		if ( substr($shortHost, 3, 1) == '.')
-		{
-			$shortHost = substr($shortHost, 5, strlen($shortHost)-1);
-		}
-		$config      = JFactory::getConfig();
+        $shortHost = JURI::getInstance()->getHost();
+        if ( substr($shortHost, 3, 1) == '.')
+        {
+           $shortHost = substr($shortHost, 5, strlen($shortHost)-1);
+        }
+        $config      = JFactory::getConfig();
+        $timeZone  = $config->get('offset');
+        $timestamp = $data['datum'].' '.$data['uhrzeit'];
+        $starttime = new DateTime("$timestamp", new DateTimeZone("$timeZone"));
+        $timestamp = $data['datum'].' '.$data['endezeit'];
+        $endtime   = new DateTime("$timestamp", new DateTimeZone("$timeZone"));
+        $offset    = (-$starttime->getOffset()).' seconds';
+        $starttime->modify("$offset");
+        $endtime->modify("$offset");
+        $fileContent  = "BEGIN:VCALENDAR\r\n";
+        $fileContent .= "VERSION:2.0\r\n";
+        $fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
+        $fileContent .= "METHOD:PUBLISH\r\n";
+        $fileContent .= "BEGIN:VEVENT\r\n";
+        $fileContent .= 'UID:'.uniqid() .'@'. $shortHost . "\r\n";
+        $fileContent .= 'ORGANIZER;CN="'.$config->get( 'mailfrom' ).'":MAILTO:'.$config->get( 'fromname' )."\r\n";
+        $fileContent .= 'LOCATION:' . $data['location'] . "\r\n";
+        $fileContent .= 'SUMMARY:' . $data['event'] . "\r\n";
+        $fileContent .= 'DESCRIPTION:';
+        if ($data['mandatory'] == '1')
+        {
+           $fileContent .= "Pflichttermin\r\n";
+        } else {
+           $fileContent .= "kein Pflichttermin\r\n";
+        }
+        $fileContent .= "CLASS:PUBLIC\r\n";
+        $fileContent .= "DTSTART:".$starttime->format('Ymd').'T'.$starttime->format('His')."Z\r\n";
+        $fileContent .= "DTEND:"  .$endtime->format('Ymd').'T'.$endtime->format('His')."Z\r\n";
+        $fileContent .= 'DTSTAMP:' . date('Ymd') .'T'.date('His') . "\r\n";
+        $fileContent .= "END:VEVENT\r\n";
+        $fileContent .= "END:VCALENDAR\r\n";
 
-    	$fileContent  = "BEGIN:VCALENDAR\r\n";
-    	$fileContent .= "VERSION:2.0\r\n";
-    	$fileContent .= "PRODID:http://www.TreuZuKaarst.de/scet/\r\n";
-		$fileContent .= "METHOD:PUBLISH\r\n";
-    	$fileContent .= "BEGIN:VEVENT\r\n";
-     	$fileContent .= 'UID:'.uniqid() .'@'. $shortHost . "\r\n";
-     	$fileContent .= 'ORGANIZER;CN="'.$config->get( 'mailfrom' ).'":MAILTO:'.$config->get( 'fromname' )."\r\n";
-     	$fileContent .= 'LOCATION:' . $data['location'] . "\r\n";
-      	$fileContent .= 'SUMMARY:' . $data['event'] . "\r\n";
-      	$fileContent .= 'DESCRIPTION:';
-      	if ($data['mandatory'] == '1')
-      	{
-   			$fileContent .= "Pflichttermin\r\n";
-      	} else {
-      		$fileContent .= "kein Pflichttermin\r\n";
-      	}
-      	$fileContent .= "CLASS:PUBLIC\r\n";
-      	$fileContent .= 'DTSTART:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['uhrzeit']))) . "\r\n";
-      	$fileContent .= 'DTEND:'   . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['endezeit']))) . "\r\n";
-      	$fileContent .= 'DTSTAMP:' . date('Ymd', strtotime($data['datum']) ) .'T'. str_replace(':', '', date('His', strtotime($data['uhrzeit']))) . "\r\n";
-      	$fileContent .= "END:VEVENT\r\n";
-      	$fileContent .= "END:VCALENDAR\r\n";
-
-    	return $fileContent;
+        return $fileContent;
     }
 
 
@@ -167,39 +174,39 @@ class SCETModelEvent extends JModelAdmin
         $tempfile  = $config->get( 'tmp_path') .DIRECTORY_SEPARATOR .( ($params->get('ics_filename')=='')?'event.ics':$params->get('ics_filename') );
                 $temp      = fopen($tempfile, 'w');
         try {
-		        fwrite($temp, $this->getVCalFile($data) );
-		        fclose($temp);
-				$mailer->addAttachment($tempfile, 'event.ics', 'base64', 'text/v-calendar');
+              fwrite($temp, $this->getVCalFile($data) );
+              fclose($temp);
+            $mailer->addAttachment($tempfile, 'event.ics', 'base64', 'text/v-calendar');
 
-		        if ($data['id'] == 0){
-		            $mailer->setSubject($params->get('new_subject'));
-		            $body = str_replace( $textmarken, $daten, $params->get('new_mailbody') ) ;
-		        } else {
-		            $mailer->setSubject($params->get('changed_subject'));
-		            $body = str_replace( $textmarken, $daten, $params->get('changed_mailbody') ) ;
-		        }
+              if ($data['id'] == 0){
+                  $mailer->setSubject($params->get('new_subject'));
+                  $body = str_replace( $textmarken, $daten, $params->get('new_mailbody') ) ;
+              } else {
+                  $mailer->setSubject($params->get('changed_subject'));
+                  $body = str_replace( $textmarken, $daten, $params->get('changed_mailbody') ) ;
+              }
 
-		        $successful = 0;
-		        foreach($receipients as $receipient):
-		            $mailer->ClearAllRecipients();
-		            $mailer->addRecipient( $receipient->email_priv );
+              $successful = 0;
+              foreach($receipients as $receipient):
+                  $mailer->ClearAllRecipients();
+                  $mailer->addRecipient( $receipient->email_priv );
 
-		            $mailbody = str_replace('[Vorname]', $receipient->vorname, $body);
-		            $mailer->setBody($mailbody);
+                  $mailbody = str_replace('[Vorname]', $receipient->vorname, $body);
+                  $mailer->setBody($mailbody);
 
-		            $send = $mailer->Send();
-		            if ( $send )
-		            {
-		                $successful++;
-		            }
-		        endforeach;
+                  $send = $mailer->Send();
+                  if ( $send )
+                  {
+                      $successful++;
+                  }
+              endforeach;
         } catch (Exception $e) {
-			// Exception
-        	JFactory::getApplication()->enqueueMessage( $e->getMessage() );
-        	foreach ($messages as $message)
-        	{
-        	    echo $message->MessageText . "\r\n";
-        	};
+         // Exception
+           JFactory::getApplication()->enqueueMessage( $e->getMessage() );
+           foreach ($messages as $message)
+           {
+               echo $message->MessageText . "\r\n";
+           };
         }
         // tempfile löschen
         unlink($tempfile);
