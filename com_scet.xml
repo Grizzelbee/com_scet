@@ -16,20 +16,10 @@
         <filename>scet.php</filename>
         <filename>controller.php</filename>
         <filename>index.html</filename>
-        <filename>views/scet/view.html.php</filename>
-        <filename>views/scet/index.html</filename>
-        <filename>views/scet/tmpl/default.php</filename>
-        <filename>views/scet/tmpl/index.html</filename>
-        <filename>views/scet/tmpl/default.xml</filename>
-        <filename>assets/css/scet.css</filename>
-        <filename>assets/images/de-DE/new.png</filename>
-        <filename>assets/images/de-DE/update.png</filename>
-        <filename>assets/images/de-DE/today.png</filename>
-        <filename>assets/images/en-GB/update.png</filename>
-        <filename>assets/images/en-GB/new.png</filename>
-        <filename>assets/images/en-GB/update.png</filename>
-        <filename>models/scet.php</filename>
-        <filename>models/index.html</filename>
+		<folder>assets</folder>
+		<folder>controllers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
     </files>
 
    	<languages folder='site/language'>

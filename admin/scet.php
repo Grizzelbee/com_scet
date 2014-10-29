@@ -5,11 +5,11 @@
 // @file        : admin/scet.php (Joomla-Entry-File)                    //
 // @implements  :                                                       //
 // @description : Main-Backend-Entry-File for the SCET-Component        //
-// Version      : 3.0.3                                                //
+// Version      : 3.0.4 alpha                                                //
 // *********************************************************************//
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-define('_SCET_VERSION','3.0.3');
+define('_SCET_VERSION','3.0.4a');
 
 // import joomla controller library
 jimport('joomla.application.component.controller');
