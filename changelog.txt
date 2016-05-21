@@ -1,5 +1,9 @@
 Versionshistorie:
 -----------------
+Version 3.0.5
+    [!] Das Versenden der Termin eMails funktionierte nicht mehr
+2016-05-21
+
 Version 3.0.4
     [!] Auf Android waren die Uhrzeiten innerhalb der Termindatei falsch, weil Zeitzonen
         und Sommer-/Winterzeit nicht richtig berücksichtigt wurden. Die Zeiten werden jetzt

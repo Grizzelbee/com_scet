@@ -6,11 +6,11 @@
         <description>SCET for Joomla Component (Small Community Event Table for Joomla)</description>
         <element>com_scet</element>
         <type>component</type>
-        <version>3.0.3</version>
+        <version>3.0.5</version>
 
         <infourl title="Small Community Event Table (SCET) for Joomla URL">http://www.treu-zu-kaarst.de</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">http://www.treu-zu-kaarst.de/scet_update/com_scet.v3.0.3.zip</downloadurl>
+            <downloadurl type="full" format="zip">http://www.treu-zu-kaarst.de/scet_update/com_scet.v3.0.5.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>

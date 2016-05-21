@@ -6,7 +6,7 @@
 // @implements  : Class ScetModelEvent                                  //
 // @description : Model for the DB-Manipulation of single               //
 //                SCET-Events; not for the list                         //
-// Version      : 3.0.4                                                 //
+// Version      : 3.0.5                                                 //
 // *********************************************************************//
 
 // Check to ensure this file is included in Joomla!
@@ -164,7 +164,7 @@ class SCETModelEvent extends JModelAdmin
     {
         $mailer      = JFactory::getMailer();
         $config      = JFactory::getConfig();
-        $sender      = array( $config->get( 'config.mailfrom' ), $config->get( 'config.fromname' ) );
+        $sender      = array( $config->get( 'mailfrom' ), $config->get( 'fromname' ) );
         $receipients = $this->getMailReceipients();
         $params      = JComponentHelper::getParams('com_scet');
         $mailer->setSender($sender);
